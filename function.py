@@ -18,62 +18,64 @@ import sympy
 
 
 # 直线最小二乘拟合
-def least_square(str):
-    def ls_line():
+def least_square(str, signal):
+    x_line = np.linspace(0, 10, 100)
+    y_line_noise = 1.5 * x_line - 0.5 + np.random.standard_normal(len(x_line)) * np.random.uniform(1, 5)
 
-        x = np.linspace(0, 10, 100)
-        y_noise = 1.5*x - 0.5 + np.random.standard_normal(len(x)) * 1.5
+    def residuals(p):
+        k, b = p
+        return 1.5*x_line - 0.5 - (k * x_line + b)
 
-        def residuals(p):
-            k, b = p
-            return 1.5*x - 0.5 - (k * x + b)
+    def draw_noise_line_data():
+        plt.scatter(x_line, y_line_noise, color="r", marker='o', s=50)
+        scatter = np.array([x_line, y_line_noise])
+        np.savetxt('C:/Users/cacho/Desktop/line_scatter.csv', scatter)
+        plt.show()
 
+    def draw_line_final():
+        x_line, y_line_noise = np.loadtxt('C:/Users/cacho/Desktop/line_scatter.csv')
+        plt.scatter(x_line, y_line_noise, color="r", marker='o', s=50)
         r = opt.leastsq(residuals, [1.3, -0.3])
         k, b = r[0]
-        y = k * x + b
-        plt.scatter(x, y_noise, color="r", marker='o', s=50)
-        plt.plot(x, y, color="b", linewidth=3)
+        y = k * x_line + b
+        plt.plot(x_line, y, color="b", linewidth=3)
         plt.show()
 
-        def residuals(p):
-            k, b = p
-            return f(x) - (k*x + b)
+    def sin_func(x, p):
+        a, k, theta = p
+        return a * np.sin(2 * np.pi * k * x + theta)
 
-        def draw_noise_data():
-            plt.scatter(x, y_noise, color="r", marker='o', s=50)
-            plt.show()
-
-        def draw_final():
-            r = opt.leastsq(residuals, [1.3, -0.3])
-            k, b = r[0]
-            y = k * x + b
-            plt.scatter(x, y_noise, color="r", marker='o', s=50)
-            plt.plot(x, y, color="b", linewidth=3)
-            plt.show()
-
-    def ls_sin():
-        def func(x, p):
-            a, k, theta = p
-            return a * np.sin(2 * np.pi * k * x + theta)
-
-        def residuals(p, y, x):
-            return y - func(x, p)
-        x = np.linspace(0, 2 * c.pi, 100)
-        a, k, theta = 10, 0.34, c.pi / 6
-        y0 = func(x, [a, k, theta])
-        y1 = y0 + 2*np.random.randn(len(x))
-        p0 = [9, 0.3, c.pi / 5]
-        plt.scatter(x, y1, color="r", marker='o', s=50)
-        plsq = opt.leastsq(residuals, p0, args=(y1, x))
-        plt.plot(x, func(x, plsq[0]), color="b", linewidth=3)
+    def draw_noise_sin_data():
+        plt.scatter(x_sin, y1_sin, color="r", marker='o', s=50)
+        scatter = np.array([x_sin, y1_sin])
+        np.savetxt('C:/Users/cacho/Desktop/sin_scatter.csv', scatter)
         plt.show()
 
-    if str == '直线':
-        ls_line()
-    elif str == '正弦曲线':
-        ls_sin()
-    else:
-        return
+    def draw_sin_final():
+        x_line, y1_sin = np.loadtxt('C:/Users/cacho/Desktop/sin_scatter.csv')
+        plt.scatter(x_sin, y1_sin, color="r", marker='o', s=50)
+        plsq = opt.leastsq(sin_residuals, p0, args=(y1_sin, x_sin))
+        plt.plot(x_sin, sin_func(x_sin, plsq[0]), color="b", linewidth=3)
+        plt.show()
+
+    def sin_residuals(p, y, x):
+        return y - sin_func(x, p)
+
+    x_sin = np.linspace(0, 2 * c.pi, 100)
+    a, k, theta = 10, 0.34, c.pi / 6
+    y0_sin = sin_func(x_sin, [a, k, theta])
+    y1_sin = y0_sin + np.random.uniform(1, 5)*np.random.randn(len(x_sin))
+    p0 = [9, 0.3, c.pi / 5]
+
+    if str == '直线' and signal == 1:
+        draw_noise_line_data()
+    elif str == '直线' and signal == 2:
+        draw_line_final()
+    elif str == '正弦曲线' and signal == 1:
+        draw_noise_sin_data()
+    elif str == '正弦曲线' and signal == 2:
+        draw_sin_final()
+    return
 
 # 正弦最小二乘拟合
 # least_square(input('请输入类型'))

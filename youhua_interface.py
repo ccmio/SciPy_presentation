@@ -15,8 +15,6 @@ def c1():
 	Frame1.configure(width=235)
 
 	v1 = tk.StringVar()
-	# e1 = tk.Entry(Frame1, textvariable=v1, width=10)
-	# e1.grid(row=1, column=1, padx=1, pady=1)
 	l1 = tk.Label(Frame1, text='选择拟合方程类型').grid(row=1, column=0, padx=1, pady=1)
 
 	def get_type(*args):
@@ -39,8 +37,7 @@ def c1():
 	Button1.configure(highlightcolor='black')
 	Button1.configure(pady='0')
 	Button1.configure(text='生成样本数据')
-	Button1.configure(command=lambda: function.least_square(get_type()))
-
+	Button1.configure(command=lambda: function.least_square(get_type(), signal=1))
 
 	Button2 = tk.Button(top)
 	Button2.place(relx=0.46, rely=0.64, height=33, width=104)
@@ -53,7 +50,7 @@ def c1():
 	Button2.configure(highlightcolor='black')
 	Button2.configure(pady='0')
 	Button2.configure(text='拟合并绘制曲线')
-
+	Button2.configure(command=lambda: function.least_square(get_type(), signal=2))
 
 
 	top.mainloop()
