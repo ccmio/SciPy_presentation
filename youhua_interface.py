@@ -1,5 +1,6 @@
 ﻿import tkinter as tk
-
+import function
+from tkinter import ttk
 
 def c1():
 	top = tk.Toplevel()
@@ -12,14 +13,21 @@ def c1():
 	Frame1.configure(relief=tk.GROOVE)
 	Frame1.configure(background='#d9d9d9')
 	Frame1.configure(width=235)
+
 	v1 = tk.StringVar()
-	e1 = tk.Entry(Frame1, textvariable=v1, width=10)
-	e1.grid(row=1, column=1, padx=1, pady=1)
-	l1 = tk.Label(Frame1, text='样本数据').grid(row=1, column=0, padx=1, pady=1)
-	v2 = tk.StringVar()
-	e2 = tk.Entry(Frame1, textvariable=v2, width=10)
-	e2.grid(row=2, column=1, padx=1, pady=1)
-	l2 = tk.Label(Frame1, text='含参方程').grid(row=2, column=0, padx=1, pady=1)
+	# e1 = tk.Entry(Frame1, textvariable=v1, width=10)
+	# e1.grid(row=1, column=1, padx=1, pady=1)
+	l1 = tk.Label(Frame1, text='选择拟合方程类型').grid(row=1, column=0, padx=1, pady=1)
+
+	def get_type(*args):
+		curve_type = cmblist.get()
+		return curve_type
+
+	cmblist = ttk.Combobox(Frame1)
+	cmblist.place(relx=0, rely=0.3, relheight=0.2, relwidth=0.5)
+	cmblist['value'] = ('直线', '正弦曲线', '多项式曲线')
+	# cmblist.bind("<<ComboboxSelected>>", get_type)  # 不需要绑定事件,(下拉列表框被选中时，绑定go()函数)
+
 	Button1 = tk.Button(top)
 	Button1.place(relx=0.04, rely=0.64, height=33, width=104)
 	Button1.configure(activebackground='#d9d9d9')
@@ -30,7 +38,9 @@ def c1():
 	Button1.configure(highlightbackground='#d9d9d9')
 	Button1.configure(highlightcolor='black')
 	Button1.configure(pady='0')
-	Button1.configure(text='样本数据绘图')
+	Button1.configure(text='生成样本数据')
+	Button1.configure(command=lambda: function.least_square(get_type()))
+
 
 	Button2 = tk.Button(top)
 	Button2.place(relx=0.46, rely=0.64, height=33, width=104)
@@ -44,6 +54,9 @@ def c1():
 	Button2.configure(pady='0')
 	Button2.configure(text='拟合并绘制曲线')
 
+
+
+	top.mainloop()
 
 def c2():
 	top = tk.Toplevel()
@@ -59,7 +72,13 @@ def c2():
 	v1 = tk.StringVar()
 	e1 = tk.Entry(Frame1, textvariable=v1, width=10)
 	e1.grid(row=1, column=1, padx=1, pady=1)
-	l1 = tk.Label(Frame1, text='请输入函数f(x,y)').grid(row=1, column=0, padx=1, pady=1)
+	l1 = tk.Label(Frame1, text='请输入函数f(x,y)')
+	l1.grid(row=1, column=0, padx=1, pady=1)
+
+	def getfunc():
+		func = e1.get()
+		return func
+
 	Button1 = tk.Button(top)
 	Button1.place(relx=0.04, rely=0.64, height=33, width=104)
 	Button1.configure(activebackground='#d9d9d9')
@@ -71,6 +90,8 @@ def c2():
 	Button1.configure(highlightcolor='black')
 	Button1.configure(pady='0')
 	Button1.configure(text='计算最小点')
+	Button1.configure(command=lambda: function.fmin(getfunc()))
+
 	Button2 = tk.Button(top)
 	Button2.place(relx=0.46, rely=0.64, height=33, width=104)
 	Button2.configure(activebackground='#d9d9d9')
@@ -83,6 +104,7 @@ def c2():
 	Button2.configure(pady='0')
 	Button2.configure(text='绘制计算路径')
 
+	top.mainloop()
 
 def c3():
 	top = tk.Toplevel()

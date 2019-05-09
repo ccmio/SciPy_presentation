@@ -31,7 +31,6 @@ def create1():
 
 	Button1 = tk.Button(Labelframe1)
 	Button1.place(relx=0.11, rely=0.2, relheight=0.15, relwidth=0.8, y=-16, h=8)
-
 	Button1.configure(activebackground='#d9d9d9')
 	Button1.configure(activeforeground='#000000')
 	Button1.configure(background='#0bafd8')
@@ -91,7 +90,6 @@ def create2():
 
 	Button1 = tk.Button(Labelframe1)
 	Button1.place(relx=0.11, rely=0.2, relheight=0.15, relwidth=0.8, y=-16, h=8)
-
 	Button1.configure(activebackground='#d9d9d9')
 	Button1.configure(activeforeground='#000000')
 	Button1.configure(background='#0bafd8')
@@ -101,6 +99,18 @@ def create2():
 	Button1.configure(highlightcolor='black')
 	Button1.configure(command=chazhi_interface.c1)
 	Button1.configure(text='插值')
+
+	Button2 = tk.Button(Labelframe1)
+	Button2.place(relx=0.11, rely=0.47, relheight=0.15, relwidth=0.8, y=-16, h=8)
+	Button2.configure(activebackground='#d9d9d9')
+	Button2.configure(activeforeground='#000000')
+	Button2.configure(background='#0bafd8')
+	Button2.configure(disabledforeground='#a3a3a3')
+	Button2.configure(foreground='#000000')
+	Button2.configure(highlightbackground='#d9d9d9')
+	Button2.configure(highlightcolor='black')
+	Button2.configure(command=chazhi_interface.c2)
+	Button2.configure(text='外推和拟合曲线')
 
 	Button3 = tk.Button(Labelframe1)
 	Button3.place(relx=0.11, rely=0.74, relheight=0.15, relwidth=0.8, y=-16, h=8)
@@ -265,7 +275,6 @@ def create6():
 
 	Button1 = tk.Button(Labelframe1)
 	Button1.place(relx=0.11, rely=0.2, relheight=0.15, relwidth=0.8, y=-16, h=8)
-
 	Button1.configure(activebackground='#d9d9d9')
 	Button1.configure(activeforeground='#000000')
 	Button1.configure(background='#0bafd8')
